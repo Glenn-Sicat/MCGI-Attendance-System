@@ -116,16 +116,21 @@ namespace MCGI_Attendance_System
             }
         }
 
-            public void ClearData()
-            {
-                txtMemberID.Clear();
-                txtFullName.Clear();    
-                dtpDateofBirth.Value = DateTime.Now;
-                dtpDateOfBaptism.Value = DateTime.Now;
-                txtChuchID.Clear();
-                txtChurchStatus.Clear();
-                pictBoxReg.Image = null;
-                imageFilePath = string.Empty; // Reset the image file path
-            }
+        public void ClearData()
+        {
+            txtMemberID.Clear();
+            txtFullName.Clear();    
+            dtpDateofBirth.Value = DateTime.Now;
+            dtpDateOfBaptism.Value = DateTime.Now;
+            txtChuchID.Clear();
+            txtChurchStatus.SelectedIndex = -1;
+            pictBoxReg.Image = null;
+            imageFilePath = string.Empty; // Reset the image file path
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            ClearData();
+        }
         }
     }

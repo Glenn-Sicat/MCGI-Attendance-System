@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace MCGI_Attendance_System
 {
@@ -151,10 +152,44 @@ namespace MCGI_Attendance_System
 
         private void btnEditData_Click(object sender, EventArgs e)
         {
+            string id = "", fullname = "", dateOfBirth = "", dateOfBapstism = "", churchID = "", churchStatus = "", imagePath = "";
             if (dataGridView.SelectedRows.Count > 0)
             {
                 DataGridViewRow row = dataGridView.SelectedRows[0];
-                Console.WriteLine(row.Cells["id"].Value);
+                
+                string selectedID = row.Cells["id"].Value.ToString();
+                CRUD crud = new CRUD();
+                DataTable userInfo = crud.GetUserInfo(selectedID);
+
+                if (userInfo.Rows.Count == 0)
+                {
+                    MessageBox.Show("Selected member is not found or registered yet.");
+                    return;
+                }
+
+                Update_Information form = new Update_Information();
+                
+
+                foreach (DataRow dataRow in userInfo.Rows)
+                {
+                    id = dataRow["memberID"].ToString();
+                    fullname = dataRow["fullName"].ToString();
+                    dateOfBirth = dataRow["dateOfBirth"].ToString();
+                    dateOfBapstism = dataRow["dateOfBaptism"].ToString();
+                    churchID = dataRow["churchID"].ToString();
+                    churchStatus = dataRow["churchStatus"].ToString();
+                    imagePath = dataRow["ImagePath"].ToString();
+                }
+
+                form.ID = id;
+                form.FullName = fullname;
+                form.DateOfBirth = dateOfBirth;
+                form.DateOfBaptism = dateOfBapstism;
+                form.ChurchID = churchID;
+                form.ChurchStatus = churchStatus;
+                form.ImageName = imagePath;
+                form.Show();
+                this.Hide();
             }
             else
             {
