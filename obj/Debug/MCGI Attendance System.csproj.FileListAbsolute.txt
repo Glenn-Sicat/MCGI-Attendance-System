@@ -67,3 +67,4 @@ D:\Coding Project\MCGI-Attendance-System\obj\Debug\MCGI Attendance System.csproj
 D:\Coding Project\MCGI-Attendance-System\obj\Debug\MCGI Att.6D23E102.Up2Date
 D:\Coding Project\MCGI-Attendance-System\obj\Debug\MCGI Attendance System.exe
 D:\Coding Project\MCGI-Attendance-System\obj\Debug\MCGI Attendance System.pdb
+D:\Coding Project\MCGI-Attendance-System\obj\Debug\MCGI_Attendance_System.Update_Information.resources

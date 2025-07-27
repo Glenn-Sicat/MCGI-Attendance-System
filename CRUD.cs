@@ -193,5 +193,78 @@ namespace MCGI_Attendance_System
                 }
             }
         }
+
+        public DataTable GetUserInfo(string selectedID)
+        {
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                string selectQuery = "SELECT * FROM MemberInformation WHERE memberID = @id;";
+
+                using (var command = new SQLiteCommand(selectQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@id", selectedID);
+
+                    using (var adapter = new SQLiteDataAdapter(command))
+                    {
+                        DataTable table = new DataTable();
+                        adapter.Fill(table); // Fills DataTable with query result
+                        return table;
+                    }
+                }
+            }
+        }
+
+        public void UpdateUserData(string selectedID, string id, string fullname, string dateOfBirth, string dateOfBaptism, string churchID, string churchStatus, string imagePath)
+        {
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                string insertQuery = "UPDATE MemberInformation " +
+                                    "SET memberID = @id, " +
+                                        "fullName = @fullname, " +
+                                        "dateOfBirth = @birth, " +
+                                        "dateOfBaptism = @baptism, " +
+                                        "churchID = @churchID, " +
+                                        "churchStatus = @status, " + 
+                                        "ImagePath = @imagepath " +
+                                    "WHERE memberID = @selectedID";
+
+                using (var command = new SQLiteCommand(insertQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@selectedID", selectedID);
+                    command.Parameters.AddWithValue("@id", id);
+                    command.Parameters.AddWithValue("@fullname", fullname);
+                    command.Parameters.AddWithValue("@birth", dateOfBirth);
+                    command.Parameters.AddWithValue("@baptism", dateOfBaptism);
+                    command.Parameters.AddWithValue("@churchID", churchID);
+                    command.Parameters.AddWithValue("@status", churchStatus);
+                    command.Parameters.AddWithValue("@imagepath", imagePath);
+
+                    int result = command.ExecuteNonQuery();
+                    Console.WriteLine(result > 0 ? "Update successful." : "Update failed.");
+                }
+            }
+        }
+
+        // Update user record in MemberAttendance table
+        public void UpdateUserRecord(string selectedID, string id, string fullname)
+        {
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                string insertQuery = "UPDATE MemberAttendance SET Id = @id, name = @fullname WHERE Id = @selectedID";
+
+                using (var command = new SQLiteCommand(insertQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@selectedID", selectedID);
+                    command.Parameters.AddWithValue("@id", id);
+                    command.Parameters.AddWithValue("@fullname", fullname);
+
+                    int result = command.ExecuteNonQuery();
+                    Console.WriteLine(result > 0 ? "Update successful." : "Update failed.");
+                }
+            }
+        }
     }
 }
